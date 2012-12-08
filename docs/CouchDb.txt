@@ -1,0 +1,114 @@
+COUCHDB
+
+----------------------------------------------------------
+
+DESCRIPTION
+
+CouchDb jest to rodzaj NoSql typu "Document Store". Służy więc do przechowywania dokumentów.
+Jego cechy charakterystyczne to:
+- dostępny za pomocą REST. Uruchomienie CouchDb uruchamia serwer REST i
+  wszystkie dane są pobierane w ten sposób. Nie trzeba tworzyć żadnego connection.
+- przechowuje dane w formacie JSON
+- wszelkie operacje na bazie można przeprowadzić za pomocą przeglądarki internetowej
+
+----------------------------------------------------------
+
+DOWNLOAD UBUNTU
+
+1. Zainstalowanie na ubuntu:
+- sudo aptitude install couchdb
+2. Zainstalowanie clienta CURL
+Program curl pozwala na wysyłanie żądań http z konsoli różnymi metodami (GET, POST, PUT, DELETE). Instalacja:
+- sudo apt-get install curl
+
+----------------------------------------------------------
+
+DOWNLOAD WINDOWS
+
+Należy po prostu ściągnąć i zainstalować plik instalacyjny. Na przykład: setup-couchdb-1.2.0_otp_R14B04.exe.
+
+----------------------------------------------------------
+
+RUN
+
+Zarówno pod Windows jak i Ubuntu serwer CouchDb jest zazwyczaj uruchamiany automatycznie przy włączaniu systemu.
+
+W Windows można przy instalacji nie zaznaczyć, że CouchDb jest serwisem. Wtedy trzeba uruchamiać go ręcznie.
+Aby to zrobić należy udać się do lokalizacji <couchDb_home>/bin i uruchomić plik couchdb.bat
+
+Aby sprawdzić, czy serwer działa, należy w przeglądarce internetowej wpisać:
+- http://localhost:5984
+Odpowiedź powinna wyglądać następująco:
+- {"couchdb":"Welcome","version":"1.0.1"}
+
+----------------------------------------------------------
+
+ADMIN PANEL
+
+Wyświetlenie w przeglądarce panelu administracyjnego:
+http://127.0.0.1:5984/_utils/index.html
+
+----------------------------------------------------------
+
+DB ACTIONS
+
+Wypisanie wszystkich baz danych:
+- http://localhost:5984/_all_dbs
+- ["_users"]
+
+---
+
+Stworzenie nowej bd
+- curl -X PUT http://127.0.0.1:5984/baseball
+- {"ok":true}
+
+---
+
+Usuniecie bd
+- curl -X DELETE http://127.0.0.1:5984/plankton
+- {"ok":true}
+
+---
+
+Replikowanie bd
+- curl -X PUT http://127.0.0.1:5984/albums-replica
+- curl -vX POST http://127.0.0.1:5984/_replicate -d '{"source":"albums","target":"albums-replica"}'
+
+--- 
+
+Dodanie dokumentu
+- curl -X PUT http://127.0.0.1:5984/albums/6e1295ed6c29495e54cc05947f18c8af -d '{"title":"There is Nothing Left to Lose","artist":"Foo Fighters"}'
+- {"ok":true,"id":"6e1295ed6c29495e54cc05947f18c8af","rev":"1-2902191555"}
+
+---
+
+Pobranie automatycznego UUIDS
+- curl -X GET http://127.0.0.1:5984/_uuids
+
+---
+
+Update dokumentu
+curl -X PUT http://127.0.0.1:5984/albums/6e1295ed6c29495e54cc05947f18c8af -d '{"_rev":"1-2902191555","title":"There is Nothing Left to Lose", "artist":"Foo Fighters","year":"1997"}'
+
+---
+
+Pobranie dokumentu
+- curl -X GET http://127.0.0.1:5984/albums/6e1295ed6c29495e54cc05947f18c8af
+
+---
+
+Usuwanie dokumentu
+curl -X DELETE http://localhost:5984/albums/album1?rev=6e1295ed6c29495e54cc05947f18c8af
+2-a568258ebba8a79c2ebe9fb5c3700ac2
+
+----------------------------------------------------------
+
+OTHERS
+
+Książka
+- http://guide.couchdb.org/editions/1/en/tour.html
+
+---
+
+Restart servera w Ubuntu
+/etc/init.d/couchdb restart

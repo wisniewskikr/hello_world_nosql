@@ -1,0 +1,24 @@
+NoSql jest to system zarz¹dzania nie relacyjnymi bazami danych. 
+Nie relacyjne bazy danych oznaczaj¹, ¿e dane nie s¹ trzymane w tabelach
+lecz najczêsciej jako prosta zale¿noœæ klucz-wartoœæ.
+
+Zalety NoSql 
+Zalet¹ NoSql jest szybkoœæ i skalowalnoœæ. Ta technologia bez problemu
+mo¿e byæ stosowana w nowoczesnych rozproszonych œrodowiskach (cloudach) i
+operowaæ na milionach danych. Przyk³adem mo¿e byæ Twitter.
+
+Wady NoSql
+Wad¹ NoSql jest brak relacji - joinów. Nie nadaje siê wiêc ona do stosowania,
+gdy chcemy stosowaæ jakieœ z³o¿one wyszukiwania np. p³ace w przedsiêbiorstwie.
+
+Wyró¿nia siê ró¿ne rodzaje NoSql:
+- Wide Column Store / Column Families;
+	* Hadoop/HBase
+- Document Store
+	* MongoDB
+	* CouchDb
+- Key Value / Tuple Store
+	* Redis
+- Graph Databases
+- Multimodel Databases
+- etc.
