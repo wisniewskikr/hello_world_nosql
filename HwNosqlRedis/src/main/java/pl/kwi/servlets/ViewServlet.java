@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,48 +14,56 @@ import org.slf4j.LoggerFactory;
 import pl.kwi.entities.UserEntity;
 import pl.kwi.services.UserService;
 
-@WebServlet("/view.do")
 public class ViewServlet extends HttpServlet{
 	
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(ViewServlet.class);
+	private UserService userService;
 	
+	public ViewServlet(){
+		userService = new UserService();
+	}
 	
+
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-						
+		
 		String submit = request.getParameter("submit");
 		
-		if("Init".equals(submit)){
-			submitInit(request, response);
+		if("Display".equals(submit)){
+			displayPage(request, response);
 			return;
 		}else if("Back".equals(submit)){
-			submitBack(request, response);
+			handleBackButton(request, response);
 			return;
 		}
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/ViewJSP.jsp");
-		requestDispatcher.forward(request, response);		
-		
 	}
 	
-	private void submitInit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void displayPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String id = request.getParameter("id");		
-		UserService simpleService = new UserService();
-		UserEntity entity = simpleService.read(id);
+		String id = request.getParameter("id");
+		
+		UserEntity entity = null;
+		try {
+			entity = userService.readUser(Long.valueOf(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		request.setAttribute("userName", entity.getName());
+		request.setAttribute("id", entity.getId());
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/ViewJSP.jsp");
 		requestDispatcher.forward(request, response);
 		
 	}
 	
-	private void submitBack(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void handleBackButton(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Init");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/table.do?submit=Display");
 		requestDispatcher.forward(request, response);
 		
 	}
