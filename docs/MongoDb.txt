@@ -1,0 +1,58 @@
+MONGODB
+
+----------------------------------------------------------
+
+DESCRIPTION
+
+MongoDb jest to rodzaj NoSql typu "Document Store". S³u¿y wiêc do przechowywania dokumentów.
+Jego cechy charakterystyczne to:
+- dostêpny za pomoc¹ klienta;
+- przechowuje dane w formacie JSON;
+- wszelkie operacje na bazie mo¿na przeprowadziæ za clienta z lini komend;
+- jest tutaj podzia³ na bazê danych i kolekcje. W jednej bazie danych mo¿e byæ wiele kolekcji.
+
+----------------------------------------------------------
+
+DOWNLOAD UBUNTU
+
+sudo apt-get install mongodb-server
+
+----------------------------------------------------------
+
+CREATE DB FOLDER
+
+Dane s¹ przechowywane w plikach w odpowiednim folderze. Domyœlnie jest to:
+/data/db
+
+Nale¿y samemu stworzyæ ten folder
+
+----------------------------------------------------------
+
+RUN 
+
+Do uruchomienia MongoDb nale¿y w linii komend u¿yæ komendy:
+mongo
+
+----------------------------------------------------------
+
+CHECK
+
+Aby sprawdziæ, czy MongoDb dzia³a, nale¿y w przegl¹darce wpisaæ w pasku adresu:
+
+http://localhost:27017/
+You are trying to access MongoDB on the native driver port. For http diagnostic access, add 1000 to the port number
+
+lub panel administracyjny:
+http://localhost:28017/
+
+----------------------------------------------------------
+
+CLIENT
+
+Aby uruchomiæ klienta nale¿y w linii komend u¿yæ komendy:
+mongod
+
+Polecenia klienta:
+- use <db_name>									: po³¹czenie z bd
+- db.<collection_name>.insert({name: "Chris"})	: dodanie do kolekcji jakiejœ wartoœci
+- db.<collection_name>.find()					: znalezienie w kolekcji wszystkich warotoœci
